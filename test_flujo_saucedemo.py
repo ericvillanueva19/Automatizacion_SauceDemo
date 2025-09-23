@@ -31,3 +31,11 @@ class flujo_completo(unittest.TestCase):
         f.Texto_Mixto("xpath","//input[@id='user-name']","standard_user")
         f.Texto_Mixto("xpath", "//input[@id='password']", "secret_sauce")
         f.Click_Mixto("xpath","//input[@id='login-button']",4)
+
+    def test2(self): #Prueba de login fallida
+        driver= self.driver
+        f  = Funciones_Globales(driver)
+        f.Navegar("https://www.saucedemo.com/v1/",t)
+        f.Texto_Mixto("xpath","//input[@id='user-name']","eric")
+        f.Texto_Mixto("xpath", "//input[@id='password']", "villanueva")
+        f.Click_Mixto("xpath","//input[@id='login-button']",4)
