@@ -76,6 +76,21 @@ class smoke_test(unittest.TestCase):
         f.Click_Mixto("xpath","//button[@id='add-to-cart-sauce-labs-bike-light']",4)
         f.Click_Mixto("xpath","//a[@class='shopping_cart_link']",4)
 
-    def test3(self):  # SD-SM-02 - Agregar 2 productos y verificar carrito
+    def test3(self):  # SD-SM-03 - Checkout completo
         f = Funciones_Globales(self.driver)
-        f.Navegar("https://www.saucedemo.com/cart.html", t)
+        f.Navegar("https://www.saucedemo.com/", t)
+        f.Texto_Mixto("xpath", "//input[@id='user-name']", "standard_user")
+        f.Texto_Mixto("xpath", "//input[@id='password']", "secret_sauce")
+        f.Click_Mixto("xpath", "//input[@id='login-button']", 2)
+        self._cierra_popup_chrome()
+        f.Click_Mixto("xpath", "//button[@id='add-to-cart-sauce-labs-backpack']", 1)
+        f.Click_Mixto("xpath", "//button[@id='add-to-cart-sauce-labs-bike-light']", 1)
+        f.Click_Mixto("xpath", "//a[@class='shopping_cart_link']", 4)
+        f.Click_Mixto("xpath", "//button[@id='checkout']", 4)
+        f.Texto_Mixto("xpath", "//input[@id='first-name']", "Eric",3)
+        f.Texto_Mixto("xpath", "//input[@id='last-name']", "Villanueva",3)
+        f.Texto_Mixto("xpath", "//input[@id='postal-code']", "10100",3)
+        f.Click_Mixto("xpath", "//input[@id='continue']", 4)
+        f.Click_Mixto("xpath", "//button[@id='finish']", 4)
+
+
