@@ -93,4 +93,18 @@ class smoke_test(unittest.TestCase):
         f.Click_Mixto("xpath", "//input[@id='continue']", 4)
         f.Click_Mixto("xpath", "//button[@id='finish']", 4)
 
+    def test4(self):  # SD-SM-04 - Logout
+        f = Funciones_Globales(self.driver)
+        f.Navegar("https://www.saucedemo.com/", t)
+        f.Texto_Mixto("xpath", "//input[@id='user-name']", "standard_user")
+        f.Texto_Mixto("xpath", "//input[@id='password']", "secret_sauce")
+        f.Click_Mixto("xpath", "//input[@id='login-button']", 2)
+        self._cierra_popup_chrome()
+        # Abrir menú lateral
+        f.Click_Mixto("xpath", "//button[@id='react-burger-menu-btn']", 5)
+
+        # Hacer click en Logout
+        f.Click_Mixto("xpath", "//a[@id='logout_sidebar_link']", 3)
+
+
 
