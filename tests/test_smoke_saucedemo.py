@@ -72,7 +72,10 @@ class smoke_test(unittest.TestCase):
         f.Texto_Mixto("xpath","//input[@id='password']","secret_sauce")
         f.Click_Mixto("xpath","//input[@id='login-button']",4)
         self._cierra_popup_chrome()
-
         f.Click_Mixto("xpath","//button[@id='add-to-cart-sauce-labs-backpack']",4)
         f.Click_Mixto("xpath","//button[@id='add-to-cart-sauce-labs-bike-light']",4)
         f.Click_Mixto("xpath","//a[@class='shopping_cart_link']",4)
+
+    def test3(self):  # SD-SM-02 - Agregar 2 productos y verificar carrito
+        f = Funciones_Globales(self.driver)
+        f.Navegar("https://www.saucedemo.com/cart.html", t)
