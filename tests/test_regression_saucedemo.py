@@ -55,20 +55,6 @@ class regresion_test(unittest.TestCase):
         )
         self.driver.maximize_window()
 
-    def _cierra_popup_chrome(self):
-        """Plan B: si aun así aparece, lo cerramos con ESC."""
-        try:
-            ActionChains(self.driver).send_keys(Keys.ESCAPE).perform()
-        except Exception:
-            pass
-        # segundo intento con JS (algunas builds)
-        try:
-            self.driver.execute_script("""
-                window.dispatchEvent(new KeyboardEvent('keydown', {key:'Escape'}));
-                window.dispatchEvent(new KeyboardEvent('keyup', {key:'Escape'}));
-            """)
-        except Exception:
-            pass
 
     def test1(self):  # SD-RG-01 - Login inválido (password incorrecto)
         f = Funciones_Globales(self.driver)
@@ -92,7 +78,6 @@ class regresion_test(unittest.TestCase):
         f.Texto_Mixto("xpath", "//input[@id='user-name']", "standard_user")
         f.Texto_Mixto("xpath", "//input[@id='password']", "secret_sauce")
         f.Click_Mixto("xpath", "//input[@id='login-button']", 2)
-        self._cierra_popup_chrome()
         f.Click_Mixto("xpath", "//button[@id='add-to-cart-sauce-labs-backpack']", 1)
         f.Click_Mixto("xpath", "//button[@id='add-to-cart-sauce-labs-bike-light']", 1)
         f.Click_Mixto("xpath", "//a[@class='shopping_cart_link']", 4)
@@ -108,7 +93,6 @@ class regresion_test(unittest.TestCase):
         f.Texto_Mixto("xpath", "//input[@id='user-name']", "standard_user")
         f.Texto_Mixto("xpath", "//input[@id='password']", "secret_sauce")
         f.Click_Mixto("xpath", "//input[@id='login-button']", 4)
-        self._cierra_popup_chrome()
         f.Click_Mixto("xpath", "//button[@id='add-to-cart-sauce-labs-backpack']", 4)
         f.Click_Mixto("xpath", "//button[@id='add-to-cart-sauce-labs-bike-light']", 4)
         f.Click_Mixto("xpath", "//a[@class='shopping_cart_link']", 4)
