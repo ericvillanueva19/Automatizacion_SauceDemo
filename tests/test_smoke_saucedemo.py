@@ -13,15 +13,21 @@ from Funciones import Funciones_Globales
 class smoke_test(unittest.TestCase):
 
     def setUp(self):
-        # perfil temporal limpio
-        tmp_profile = tempfile.mkdtemp()
+        from selenium import webdriver
+        from selenium.webdriver.chrome.service import Service
+        from webdriver_manager.chrome import ChromeDriverManager
 
         options = webdriver.ChromeOptions()
         options.add_argument("--start-maximized")
-        options.add_argument(f"--user-data-dir={tmp_profile}")   # <- perfil limpio
-        # options.add_argument("--guest")  # alternativa: modo invitado
 
-        # Desactivar gestor/auto-sign-in y fugas
+        # 1) Modo invitado (perfil “vacío” sin contraseñas/Sync)
+        options.add_argument("--guest")
+        options.add_argument("--no-first-run")
+        options.add_argument("--no-default-browser-check")
+        options.add_argument("--disable-sync")
+        options.add_argument("--disable-extensions")
+
+        # 2) Preferencias que desactivan gestor/auto-signin/autofill
         prefs = {
             "credentials_enable_service": False,
             "profile.password_manager_enabled": False,
@@ -29,7 +35,17 @@ class smoke_test(unittest.TestCase):
             "autofill.profile_enabled": False
         }
         options.add_experimental_option("prefs", prefs)
-        options.add_argument("--disable-features=PasswordLeakDetection,AutofillServerCommunication,PasswordManagerOnboarding,CredentialManagementAPI,PasswordImport")
+
+        # 3) Desactivar features que disparan ese popup
+        options.add_argument(
+            "--disable-features="
+            "PasswordLeakDetection,"
+            "PasswordManagerOnboarding,"
+            "AutofillServerCommunication,"
+            "CredentialManagementAPI"
+        )
+
+        # (opcional) quitar banners de “automation”
         options.add_experimental_option("excludeSwitches", ["enable-automation", "enable-logging"])
         options.add_experimental_option("useAutomationExtension", False)
 
